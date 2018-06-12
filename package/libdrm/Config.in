@@ -97,6 +97,18 @@ config BR2_PACKAGE_LIBDRM_VC4
 	help
 	  Install vc4 (Raspberry Pi) driver.
 
+if BR2_PACKAGE_IMX_GPU_VIV
+
+config BR2_PACKAGE_LIBDRM_VIVANTE
+	bool "vivante (experimental)"
+	default y
+	depends on BR2_PACKAGE_LIBDRM_HAS_ATOMIC
+	select BR2_PACKAGE_LIBDRM_ENABLE_ATOMIC
+	help
+	  Install the Vivante driver using an experimental API.
+
+endif
+
 config BR2_PACKAGE_LIBDRM_INSTALL_TESTS
 	bool "Install test programs"
 	help

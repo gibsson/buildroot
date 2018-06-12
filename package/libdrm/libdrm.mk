@@ -4,9 +4,15 @@
 #
 ################################################################################
 
+ifeq ($(BR2_PACKAGE_IMX_GPU_VIV),y)
+LIBDRM_VERSION = rel_imx_4.9.88_2.0.0_ga
+LIBDRM_SITE = https://source.codeaurora.org/external/imx/libdrm-imx
+LIBDRM_SITE_METHOD = git
+else
 LIBDRM_VERSION = 2.4.93
 LIBDRM_SOURCE = libdrm-$(LIBDRM_VERSION).tar.bz2
 LIBDRM_SITE = https://dri.freedesktop.org/libdrm
+endif
 LIBDRM_LICENSE = MIT
 LIBDRM_INSTALL_STAGING = YES
 
@@ -97,6 +103,14 @@ ifeq ($(BR2_PACKAGE_LIBDRM_VC4),y)
 LIBDRM_CONF_OPTS += --enable-vc4
 else
 LIBDRM_CONF_OPTS += --disable-vc4
+endif
+
+ifeq ($(BR2_PACKAGE_IMX_GPU_VIV),y)
+ifeq ($(BR2_PACKAGE_LIBDRM_VIVANTE),y)
+LIBDRM_CONF_OPTS += --enable-vivante-experimental-api
+else
+LIBDRM_CONF_OPTS += --disable-vivante-experimental-api
+endif
 endif
 
 ifeq ($(BR2_PACKAGE_HAS_UDEV),y)
